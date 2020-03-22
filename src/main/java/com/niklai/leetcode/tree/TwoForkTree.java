@@ -409,4 +409,107 @@ public class TwoForkTree {
 
         return false;
     }
+
+    //    根据一棵树的前序遍历与中序遍历构造二叉树。
+    //
+    //    注意:
+    //    你可以假设树中没有重复的元素。
+    //
+    //    例如，给出
+    //
+    //    前序遍历 preorder = [3,9,20,15,7]
+    //    中序遍历 inorder = [9,3,15,20,7]
+    //
+    //    返回如下的二叉树：
+    //
+    //            3
+    //           / \
+    //          9  20
+    //            /  \
+    //           15   7
+    public static TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder == null || preorder.length == 0) {
+            return null;
+        }
+
+        // 根据前序获取根节点
+        TreeNode root = new TreeNode(preorder[0]);
+        List<Integer> inOrderList = new ArrayList<>();
+        for (int n : inorder) {
+            inOrderList.add(n);
+        }
+
+        buildTreeItem(preorder, 0, inOrderList, root);
+        return root;
+    }
+
+    private static void buildTreeItem(int[] preorder, int n, List<Integer> inorderList, TreeNode root) {
+        // 根据前序的根节点分隔中序，根节点左边都在树的左侧，右边都在树的右侧
+        List<Integer> leftInOrderList = inorderList.subList(0, inorderList.indexOf(root.val));
+        for (int i = n + 1; i < preorder.length; i++) {
+            int rootNum = preorder[i];
+            if (leftInOrderList.contains(rootNum)) {
+                root.left = new TreeNode(rootNum);
+
+                // 当前节点作为下级的根节点，分割出来的左边数组作为当前节点的中序，递归
+                buildTreeItem(preorder, i, leftInOrderList, root.left);
+                break;
+            }
+        }
+
+        List<Integer> rightInOrderList = inorderList.subList(inorderList.indexOf(root.val) + 1, inorderList.size());
+        for (int j = n + 1; j < preorder.length; j++) {
+            int rootNum = preorder[j];
+            if (rightInOrderList.contains(rootNum)) {
+                root.right = new TreeNode(rootNum);
+
+                // 当前节点作为下级的根节点，分割出来的右边数组作为当前节点的中序，递归
+                buildTreeItem(preorder, j, rightInOrderList, root.right);
+                break;
+            }
+        }
+    }
+
+    public static TreeNode buildTree2(int[] inorder, int[] postorder) {
+        if (postorder == null || postorder.length == 0) {
+            return null;
+        }
+
+        // 根据后序获取根节点
+        TreeNode root = new TreeNode(postorder[postorder.length - 1]);
+        List<Integer> inOrderList = new ArrayList<>();
+        for (int n : inorder) {
+            inOrderList.add(n);
+        }
+
+        buildTree2Item(inOrderList, postorder, postorder.length - 1, root);
+        return root;
+    }
+
+    private static void buildTree2Item(List<Integer> inorderList, int[] postorder, int n, TreeNode root) {
+        // 根据后序的根节点分隔中序，根节点左边都在树的左侧，右边都在树的右侧
+        List<Integer> rightInOrderList = inorderList.subList(inorderList.indexOf(root.val) + 1, inorderList.size());
+        for (int j = n - 1; j >= 0; j--) {
+            int rootNum = postorder[j];
+            if (rightInOrderList.contains(rootNum)) {
+                root.right = new TreeNode(rootNum);
+
+                // 当前节点作为下级的根节点，分割出来的右边数组作为当前节点的中序，递归
+                buildTree2Item(rightInOrderList, postorder, j, root.right);
+                break;
+            }
+        }
+
+        List<Integer> leftInOrderList = inorderList.subList(0, inorderList.indexOf(root.val));
+        for (int i = n - 1; i >= 0; i--) {
+            int rootNum = postorder[i];
+            if (leftInOrderList.contains(rootNum)) {
+                root.left = new TreeNode(rootNum);
+
+                // 当前节点作为下级的根节点，分割出来的左边数组作为当前节点的中序，递归
+                buildTree2Item(leftInOrderList, postorder, i, root.left);
+                break;
+            }
+        }
+    }
 }

@@ -127,7 +127,7 @@ public class TwoForkTreeTest {
         Assertions.assertTrue(!result);
     }
 
-    private TwoForkTree.TreeNode hasPathSumNode(){
+    private TwoForkTree.TreeNode hasPathSumNode() {
         TwoForkTree.TreeNode root = new TwoForkTree.TreeNode(5);
         TwoForkTree.TreeNode n4 = new TwoForkTree.TreeNode(4);
         TwoForkTree.TreeNode n8 = new TwoForkTree.TreeNode(8);
@@ -148,6 +148,7 @@ public class TwoForkTreeTest {
         root.right = n8;
         return root;
     }
+
     @Test
     @DisplayName("路径总和-递归")
     public void hasPathSumTest() {
@@ -159,10 +160,24 @@ public class TwoForkTreeTest {
 
     @Test
     @DisplayName("路径总和-迭代")
-    public void hasPathSum2Test(){
+    public void hasPathSum2Test() {
         TwoForkTree.TreeNode root = hasPathSumNode();
 
         boolean result = TwoForkTree.hasPathSum2(root, 22);
         Assertions.assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("从前序与中序遍历序列构造二叉树-递归")
+    public void buildTreeTest() {
+        TwoForkTree.TreeNode treeNode = TwoForkTree.buildTree(new int[]{3, 9, 20, 15, 7}, new int[]{9, 3, 15, 20, 7});
+        System.out.println(treeNode);
+    }
+
+    @Test
+    @DisplayName("从中序与后序遍历序列构造二叉树-递归")
+    public void buildTree2Test() {
+        TwoForkTree.TreeNode treeNode = TwoForkTree.buildTree2(new int[]{9, 3, 15, 20, 7}, new int[]{9, 15, 7, 20, 3});
+        System.out.println(treeNode);
     }
 }
