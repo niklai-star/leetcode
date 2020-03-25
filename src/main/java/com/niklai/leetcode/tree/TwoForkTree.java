@@ -14,6 +14,27 @@ public class TwoForkTree {
         }
     }
 
+    public static class Node {
+        public int val;
+        public Node left;
+        public Node right;
+        public Node next;
+
+        public Node() {
+        }
+
+        public Node(int _val) {
+            val = _val;
+        }
+
+        public Node(int _val, Node _left, Node _right, Node _next) {
+            val = _val;
+            left = _left;
+            right = _right;
+            next = _next;
+        }
+    }
+
     // 给定一个二叉树，返回它的 前序 遍历。
     //
     // 示例:
@@ -510,6 +531,217 @@ public class TwoForkTree {
                 buildTree2Item(leftInOrderList, postorder, i, root.left);
                 break;
             }
+        }
+    }
+
+    //    给定一个完美二叉树，其所有叶子节点都在同一层，每个父节点都有两个子节点。
+    //    填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。
+    //
+    //    初始状态下，所有 next 指针都被设置为 NULL。
+    //    输入：{"$id":"1","left":{"$id":"2","left":{"$id":"3","left":null,"next":null,"right":null,"val":4},"next":null,"right":{"$id":"4","left":null,"next":null,"right":null,"val":5},"val":2},"next":null,"right":{"$id":"5","left":{"$id":"6","left":null,"next":null,"right":null,"val":6},"next":null,"right":{"$id":"7","left":null,"next":null,"right":null,"val":7},"val":3},"val":1}
+    //
+    //    输出：{"$id":"1","left":{"$id":"2","left":{"$id":"3","left":null,"next":{"$id":"4","left":null,"next":{"$id":"5","left":null,"next":{"$id":"6","left":null,"next":null,"right":null,"val":7},"right":null,"val":6},"right":null,"val":5},"right":null,"val":4},"next":{"$id":"7","left":{"$ref":"5"},"next":null,"right":{"$ref":"6"},"val":3},"right":{"$ref":"4"},"val":2},"next":null,"right":{"$ref":"7"},"val":1}
+    //
+    //    解释：给定二叉树如图 A 所示，你的函数应该填充它的每个 next 指针，以指向其下一个右侧节点，如图 B 所示。
+    //    提示：
+    //
+    //    你只能使用常量级额外空间。
+    //    使用递归解题也符合要求，本题中递归程序占用的栈空间不算做额外的空间复杂度。
+    public static Node connect(Node root) {
+        if (root == null) {
+            return null;
+        }
+
+        if (root.left != null) {
+            root.left.next = root.right;
+            if (root.next != null) {
+                root.right.next = root.next.left;
+            }
+
+            connect(root.left);
+            connect(root.right);
+        }
+
+        return root;
+    }
+
+    //    给定一个二叉树,填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。
+    //    初始状态下，所有 next 指针都被设置为 NULL。
+    //
+    //    输入：root = [1,2,3,4,5,null,7]
+    //    输出：[1,#,2,3,#,4,5,7,#]
+    //    解释：给定二叉树如图 A 所示，你的函数应该填充它的每个 next 指针，以指向其下一个右侧节点，如图 B 所示。
+    public static Node connect2(Node root) {
+        if (root == null) {
+            return null;
+        }
+
+        if (root.left != null) {
+            if (root.right != null) {
+                root.left.next = root.right;
+            } else {
+                Node node = root.next;
+                while (node != null) {
+                    if (node.left != null) {
+                        root.left.next = node.left;
+                        break;
+                    }
+
+                    if (node.right != null) {
+                        root.left.next = node.right;
+                        break;
+                    }
+
+                    node = node.next;
+                }
+            }
+        }
+
+        if (root.right != null) {
+            Node node = root.next;
+            while (node != null) {
+                if (node.left != null) {
+                    root.right.next = node.left;
+                    break;
+                }
+
+                if (node.right != null) {
+                    root.right.next = node.right;
+                    break;
+                }
+
+                node = node.next;
+            }
+        }
+
+        connect2(root.right);
+        connect2(root.left);
+        return root;
+    }
+
+    //    给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
+    //
+    //    百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
+    //    示例 1:
+    //
+    //    输入: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
+    //    输出: 3
+    //    解释: 节点 5 和节点 1 的最近公共祖先是节点 3。
+    //
+    //    示例 2:
+    //
+    //    输入: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
+    //    输出: 5
+    //    解释: 节点 5 和节点 4 的最近公共祖先是节点 5。因为根据定义最近公共祖先节点可以为节点本身。
+    //
+    //
+    //
+    //    说明:
+    //
+    //    所有节点的值都是唯一的。
+    //    p、q 为不同节点且均存在于给定的二叉树中。
+    public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        // 如果一个节点的左节点和右节点分别存在对应节点，则此节点为公共祖先节点
+        if (root == null || root == p || root == q) {
+            return root;
+        }
+
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (left != null && right != null) {
+            return root;
+        }
+
+        return left != null ? left : right;
+    }
+
+    //    序列化是将一个数据结构或者对象转换为连续的比特位的操作，进而可以将转换后的数据存储在一个文件或者内存中，同时也可以通过网络传输到另一个计算机环境，采取相反方式重构得到原数据。
+    //
+    //    请设计一个算法来实现二叉树的序列化与反序列化。这里不限定你的序列 / 反序列化算法执行逻辑，你只需要保证一个二叉树可以被序列化为一个字符串并且将这个字符串反序列化为原始的树结构。
+    //
+    //    示例:
+    //
+    //    你可以将以下二叉树：
+    //
+    //            1
+    //           / \
+    //          2   3
+    //             / \
+    //            4   5
+    //
+    //    序列化为 "[1,2,3,null,null,4,5]"
+    //
+    //    提示: 这与 LeetCode 目前使用的方式一致，详情请参阅 LeetCode 序列化二叉树的格式。你并非必须采取这种方式，你也可以采用其他的方法解决这个问题。
+    //
+    //    说明: 不要使用类的成员 / 全局 / 静态变量来存储状态，你的序列化和反序列化算法应该是无状态的。
+    public static class Codec {
+
+        // Encodes a tree to a single string.
+        public static String serialize(TreeNode root) {
+            if (root == null) {
+                return null;
+            }
+
+            List<String> list = new ArrayList<>();
+            LinkedList<TreeNode> lk = new LinkedList<>();
+            lk.offer(root);
+            int i = lk.size();
+            while (true) {
+                boolean end = true;
+                while (i > 0) {
+                    TreeNode node = lk.pop();
+                    i--;
+                    if (node == null) {
+                        list.add("null");
+                        lk.offer(null);
+                        lk.offer(null);
+                    } else {
+                        list.add(String.valueOf(node.val));
+                        lk.offer(node.left);
+                        lk.offer(node.right);
+                        end = end && (node.left == null) && (node.right == null);
+                    }
+                }
+
+                if (end) {
+                    break;
+                } else {
+                    i = lk.size();
+                }
+            }
+
+            return String.join(",", list);
+        }
+
+        // Decodes your encoded data to tree.
+        public static TreeNode deserialize(String data) {
+            if (data == null) {
+                return null;
+            }
+
+            String[] arr = data.split(",");
+            if (arr.length == 0) {
+                return null;
+            }
+
+            TreeNode root = createNodeItem(arr, 0);
+            return root;
+        }
+
+        private static TreeNode createNodeItem(String[] arr, int idx) {
+            TreeNode node = null;
+            if (idx < arr.length) {
+                String num = arr[idx];
+                if (num.equals("null")) {
+                    return null;
+                }
+
+                node = new TreeNode(Integer.valueOf(num));
+                node.left = createNodeItem(arr, 2 * idx + 1);
+                node.right = createNodeItem(arr, 2 * idx + 2);
+            }
+
+            return node;
         }
     }
 }
