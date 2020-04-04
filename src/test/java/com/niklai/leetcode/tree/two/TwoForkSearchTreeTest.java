@@ -1,5 +1,7 @@
-package com.niklai.leetcode.tree;
+package com.niklai.leetcode.tree.two;
 
+import com.niklai.leetcode.tree.two.TreeNode;
+import com.niklai.leetcode.tree.two.TwoForkSearchTree;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

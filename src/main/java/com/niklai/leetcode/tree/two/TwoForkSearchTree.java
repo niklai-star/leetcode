@@ -1,4 +1,4 @@
-package com.niklai.leetcode.tree;
+package com.niklai.leetcode.tree.two;
 
 import java.util.*;
 
