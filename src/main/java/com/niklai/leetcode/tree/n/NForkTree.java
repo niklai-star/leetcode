@@ -133,16 +133,16 @@ public class NForkTree {
     //    树的深度不会超过 1000。
     //    树的节点总不会超过 5000。
     public static int maxDepth(Node root) {
-        if(root == null){
+        if (root == null) {
             return 0;
         }
 
         int depth = 1;
-        if(root.children == null){
+        if (root.children == null) {
             return depth;
         }
 
-        for(Node node : root.children){
+        for (Node node : root.children) {
             depth = Math.max(maxDepth(node) + 1, depth);
         }
 
