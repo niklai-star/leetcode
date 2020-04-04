@@ -61,4 +61,41 @@ public class TwoForkSearchTreeTest {
         System.out.println(iterator.next());    // 返回 20
         System.out.println(iterator.hasNext()); // 返回 false
     }
+
+    @Test
+    @DisplayName("Search in a Binary Search Tree")
+    public void searchBSTTest(){
+        TreeNode n4 = new TreeNode(4);
+        TreeNode n2 = new TreeNode(2);
+        TreeNode n7 = new TreeNode(7);
+        TreeNode n1 = new TreeNode(1);
+        TreeNode n3 = new TreeNode(3);
+        n2.left = n1;
+        n2.right = n3;
+        n4.left = n2;
+        n4.right = n7;
+
+        TreeNode treeNode = TwoForkSearchTree.searchBST(n4, 2);
+        Assertions.assertEquals(treeNode.val, n2.val);
+
+        treeNode = TwoForkSearchTree.searchBST(n4, 5);
+        Assertions.assertNull(treeNode);
+    }
+
+    @Test
+    @DisplayName("Insert into a Binary Search Tree")
+    public void insertIntoBSTTest(){
+        TreeNode n4 = new TreeNode(4);
+        TreeNode n2 = new TreeNode(2);
+        TreeNode n7 = new TreeNode(7);
+        TreeNode n1 = new TreeNode(1);
+        TreeNode n3 = new TreeNode(3);
+        n2.left = n1;
+        n2.right = n3;
+        n4.left = n2;
+        n4.right = n7;
+
+        TreeNode treeNode = TwoForkSearchTree.insertIntoBST(n4, 5);
+        Assertions.assertEquals(treeNode.val, n4.val);
+    }
 }
