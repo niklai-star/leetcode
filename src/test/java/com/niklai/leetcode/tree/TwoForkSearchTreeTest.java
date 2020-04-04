@@ -38,7 +38,7 @@ public class TwoForkSearchTreeTest {
 
     @Test
     @DisplayName("二叉搜索树迭代器")
-    public void bstIteratorTest(){
+    public void bstIteratorTest() {
         TreeNode n7 = new TreeNode(7);
         TreeNode n3 = new TreeNode(3);
         TreeNode n15 = new TreeNode(15);
@@ -64,7 +64,7 @@ public class TwoForkSearchTreeTest {
 
     @Test
     @DisplayName("Search in a Binary Search Tree")
-    public void searchBSTTest(){
+    public void searchBSTTest() {
         TreeNode n4 = new TreeNode(4);
         TreeNode n2 = new TreeNode(2);
         TreeNode n7 = new TreeNode(7);
@@ -84,7 +84,7 @@ public class TwoForkSearchTreeTest {
 
     @Test
     @DisplayName("Insert into a Binary Search Tree")
-    public void insertIntoBSTTest(){
+    public void insertIntoBSTTest() {
         TreeNode n4 = new TreeNode(4);
         TreeNode n2 = new TreeNode(2);
         TreeNode n7 = new TreeNode(7);
@@ -97,5 +97,59 @@ public class TwoForkSearchTreeTest {
 
         TreeNode treeNode = TwoForkSearchTree.insertIntoBST(n4, 5);
         Assertions.assertEquals(treeNode.val, n4.val);
+    }
+
+    @Test
+    @DisplayName("存在重复元素 III")
+    public void containsNearbyAlmostDuplicateTest() {
+        boolean result = TwoForkSearchTree.containsNearbyAlmostDuplicate(new int[]{1, 2, 3, 1}, 3, 0);
+        Assertions.assertTrue(result);
+
+        result = TwoForkSearchTree.containsNearbyAlmostDuplicate(new int[]{1, 0, 1, 1}, 1, 2);
+        Assertions.assertTrue(result);
+
+        result = TwoForkSearchTree.containsNearbyAlmostDuplicate(new int[]{1, 5, 9, 1, 5, 9}, 2, 3);
+        Assertions.assertTrue(!result);
+    }
+
+    @Test
+    @DisplayName("平衡二叉树")
+    public void isBalancedTest() {
+        TreeNode n3 = new TreeNode(3);
+        TreeNode n9 = new TreeNode(9);
+        TreeNode n20 = new TreeNode(20);
+        TreeNode n15 = new TreeNode(15);
+        TreeNode n7 = new TreeNode(7);
+        n20.left = n15;
+        n20.right = n7;
+        n3.left = n9;
+        n3.right = n20;
+
+        boolean balanced = TwoForkSearchTree.isBalanced(n3);
+        Assertions.assertTrue(balanced);
+
+        TreeNode r = new TreeNode(1);
+        TreeNode l2 = new TreeNode(2);
+        TreeNode r2 = new TreeNode(2);
+        TreeNode l3 = new TreeNode(3);
+        TreeNode r3 = new TreeNode(3);
+        TreeNode l4 = new TreeNode(4);
+        TreeNode r4 = new TreeNode(4);
+        r.left = l2;
+        r.right = r2;
+        l2.left = l3;
+        l2.right = r3;
+        l3.left = l4;
+        l3.right = r4;
+
+        balanced = TwoForkSearchTree.isBalanced(r);
+        Assertions.assertTrue(!balanced);
+    }
+
+    @Test
+    @DisplayName("将有序数组转换为二叉搜索树")
+    public void sortedArrayToBSTTest() {
+        TreeNode treeNode = TwoForkSearchTree.sortedArrayToBST(new int[]{-10, -3, 0, 5, 9});
+        System.out.println(treeNode);
     }
 }
