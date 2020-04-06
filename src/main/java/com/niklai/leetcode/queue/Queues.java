@@ -4,6 +4,80 @@ import java.util.LinkedList;
 
 public class Queues {
 
+    //    你被给定一个 m × n 的二维网格，网格中有以下三种可能的初始化值：
+    //
+    //    -1 表示墙或是障碍物
+    //    0 表示一扇门
+    //    INF 无限表示一个空的房间。然后，我们用 231 - 1 = 2147483647 代表 INF。你可以认为通往门的距离总是小于 2147483647 的。
+    //
+    //    你要给每个空房间位上填上该房间到 最近 门的距离，如果无法到达门，则填 INF 即可。
+    //
+    //    示例：
+    //
+    //    给定二维网格：
+    //
+    //    INF  -1  0  INF
+    //    INF INF INF  -1
+    //    INF  -1 INF  -1
+    //      0  -1 INF INF
+    //
+    //    运行完你的函数后，该网格应该变成：
+    //
+    //    3  -1   0   1
+    //    2   2   1  -1
+    //    1  -1   2  -1
+    //    0  -1   3   4
+    public static void wallsAndGates(int[][] rooms) {
+        if (rooms == null || rooms.length == 0) {
+            return;
+        }
+
+        int rows = rooms.length;
+        int cols = rooms[0].length;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (rooms[i][j] == 0) {
+                    wallsAndGatesItem(rooms, i, j, 1, rows, cols);
+                }
+            }
+        }
+    }
+
+    private static void wallsAndGatesItem(int[][] rooms, int i, int j, int rounds, int rows, int cols) {
+        // 上
+        if ((i - 1) >= 0 && rooms[i - 1][j] > 0) {
+            if (rooms[i - 1][j] > rounds) {
+                rooms[i - 1][j] = rounds;
+                wallsAndGatesItem(rooms, i - 1, j, rounds + 1, rows, cols);
+            }
+        }
+
+        // 下
+        if ((i + 1) < rows && rooms[i + 1][j] > 0) {
+            if (rooms[i + 1][j] > rounds) {
+                rooms[i + 1][j] = rounds;
+                wallsAndGatesItem(rooms, i + 1, j, rounds + 1, rows, cols);
+            }
+        }
+
+        // 左
+        if ((j - 1) >= 0 && rooms[i][j - 1] > 0) {
+            if (rooms[i][j - 1] > rounds) {
+                rooms[i][j - 1] = rounds;
+                wallsAndGatesItem(rooms, i, j - 1, rounds + 1, rows, cols);
+            }
+        }
+
+        // 右
+        if ((j + 1) < cols && rooms[i][j + 1] > 0) {
+            if (rooms[i][j + 1] > rounds) {
+                rooms[i][j + 1] = rounds;
+                wallsAndGatesItem(rooms, i, j + 1, rounds + 1, rows, cols);
+            }
+        }
+    }
+
     //    给定一个由 '1'（陆地）和 '0'（水）组成的的二维网格，计算岛屿的数量。一个岛被水包围，并且它是通过水平方向或垂直方向上相邻的陆地连接而成的。你可以假设网格的四个边均被水包围。
     //
     //    示例 1:
@@ -125,6 +199,23 @@ public class Queues {
 
         // 右
         numIslandsItem2(grid, idx_i, idx_j + 1);
+    }
+
+    //    给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, ...）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。
+    //
+    //    示例 1:
+    //
+    //    输入: n = 12
+    //    输出: 3
+    //    解释: 12 = 4 + 4 + 4.
+    //
+    //    示例 2:
+    //
+    //    输入: n = 13
+    //    输出: 2
+    //    解释: 13 = 4 + 9.
+    public static int numSquares(int n) {
+        return 0;
     }
 
     //    设计你的循环队列实现。 循环队列是一种线性数据结构，其操作表现基于 FIFO（先进先出）原则并且队尾被连接在队首之后以形成一个循环。它也被称为“环形缓冲器”。

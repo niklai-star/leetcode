@@ -56,4 +56,24 @@ public class QueuesTest {
         result = Queues.numIslands2(new char[][]{{'1', '1', '1'}, {'0', '1', '0'}, {'1', '1', '1'}});
         Assertions.assertEquals(1, result);
     }
+
+    //    @Test
+//    @DisplayName("完全平方数")
+    public void numSquaresTest() {
+        int result = Queues.numSquares(12);
+        Assertions.assertEquals(3, result);
+    }
+
+    @Test
+    @DisplayName("墙与门")
+    public void wallsAndGatesTest() {
+        int[][] nums = {
+                {Integer.MAX_VALUE, -1, 0, Integer.MAX_VALUE},
+                {Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, -1},
+                {Integer.MAX_VALUE, -1, Integer.MAX_VALUE, -1},
+                {0, -1, Integer.MAX_VALUE, Integer.MAX_VALUE}
+        };
+        Queues.wallsAndGates(nums);
+        System.out.println(nums);
+    }
 }
