@@ -45,4 +45,20 @@ public class StacksTest {
         Assertions.assertEquals(6, Stacks.evalRPN(new String[]{"4", "13", "5", "/", "+"}));
         Assertions.assertEquals(22, Stacks.evalRPN(new String[]{"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"}));
     }
+
+    @Test
+    @DisplayName("字符串解码")
+    public void decodeStringTest(){
+        String result = Stacks.decodeString("3[a]2[bc]");
+        Assertions.assertEquals("aaabcbc", result);
+
+        result = Stacks.decodeString("3[a2[c]]");
+        Assertions.assertEquals("accaccacc", result);
+
+        result = Stacks.decodeString("2[abc]3[cd]ef");
+        Assertions.assertEquals("abcabccdcdcdef", result);
+
+        result = Stacks.decodeString("10[leetcode]");
+        Assertions.assertEquals("leetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcode", result);
+    }
 }

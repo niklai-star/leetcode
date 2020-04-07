@@ -1,5 +1,6 @@
 package com.niklai.leetcode.stack;
 
+import javax.print.attribute.IntegerSyntax;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
@@ -158,23 +159,85 @@ public class Stacks {
         return stack.peek();
     }
 
+    //    给定一个经过编码的字符串，返回它解码后的字符串。
+    //
+    //    编码规则为: k[encoded_string]，表示其中方括号内部的 encoded_string 正好重复 k 次。注意 k 保证为正整数。
+    //
+    //    你可以认为输入字符串总是有效的；输入字符串中没有额外的空格，且输入的方括号总是符合格式要求的。
+    //
+    //    此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 k ，例如不会出现像 3a 或 2[4] 的输入。
+    //
+    //    示例:
+    //
+    //        s = "3[a]2[bc]", 返回 "aaabcbc".
+    //        s = "3[a2[c]]", 返回 "accaccacc".
+    //        s = "2[abc]3[cd]ef", 返回 "abcabccdcdcdef".
+    public static String decodeString(String s) {
+        String result = "";
+        if (s == null || s.length() == 0) {
+            return result;
+        }
+
+        Stack<Integer> nums = new Stack<>();
+        Stack<String> strings = new Stack<>();
+        char[] chars = s.toCharArray();
+        String strNum = "";
+        for (char c : chars) {
+            if (Character.isDigit(c)) {
+                strNum = strNum + c;
+            } else if (c == ']') {
+                Integer count = nums.pop();
+                String item = "";
+                while (true) {
+                    String itemC = strings.pop();
+                    if (!itemC.equals("[")) {
+                        item = itemC + item;
+                    } else {
+                        break;
+                    }
+                }
+
+                String tmp = "";
+                for (int i = 0; i < count; i++) {
+                    tmp += item;
+                }
+
+                strings.push(tmp);
+            } else {
+                if (c == '[') {
+                    nums.push(Integer.valueOf(strNum));
+                    strNum = "";
+                }
+
+                strings.push(c + "");
+            }
+        }
+
+        while (!strings.isEmpty()) {
+            result = strings.pop() + result;
+        }
+
+        return result;
+    }
+
+
     //    设计一个支持 push，pop，top 操作，并能在常数时间内检索到最小元素的栈。
-//
-//    push(x) -- 将元素 x 推入栈中。
-//    pop() -- 删除栈顶的元素。
-//    top() -- 获取栈顶元素。
-//    getMin() -- 检索栈中的最小元素。
-//
-//    示例:
-//
-//        MinStack minStack = new MinStack();
-//        minStack.push(-2);
-//        minStack.push(0);
-//        minStack.push(-3);
-//        minStack.getMin();   --> 返回 -3.
-//        minStack.pop();
-//        minStack.top();      --> 返回 0.
-//        minStack.getMin();   --> 返回 -2.
+    //
+    //    push(x) -- 将元素 x 推入栈中。
+    //    pop() -- 删除栈顶的元素。
+    //    top() -- 获取栈顶元素。
+    //    getMin() -- 检索栈中的最小元素。
+    //
+    //    示例:
+    //
+    //        MinStack minStack = new MinStack();
+    //        minStack.push(-2);
+    //        minStack.push(0);
+    //        minStack.push(-3);
+    //        minStack.getMin();   --> 返回 -3.
+    //        minStack.pop();
+    //        minStack.top();      --> 返回 0.
+    //        minStack.getMin();   --> 返回 -2.
     public static class MinStack {
         Stack<Integer> st;
         Stack<Integer> minSt;
