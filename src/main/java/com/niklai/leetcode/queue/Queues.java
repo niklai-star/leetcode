@@ -218,6 +218,79 @@ public class Queues {
         return 0;
     }
 
+    //    有一幅以二维整数数组表示的图画，每一个整数表示该图画的像素值大小，数值在 0 到 65535 之间。
+//
+//    给你一个坐标 (sr, sc) 表示图像渲染开始的像素值（行 ，列）和一个新的颜色值 newColor，让你重新上色这幅图像。
+//
+//    为了完成上色工作，从初始坐标开始，记录初始坐标的上下左右四个方向上像素值与初始坐标相同的相连像素点，接着再记录这四个方向上符合条件的像素点与他们对应四个方向上像素值与初始坐标相同的相连像素点，……，重复该过程。将所有有记录的像素点的颜色值改为新的颜色值。
+//
+//    最后返回经过上色渲染后的图像。
+//
+//    示例 1:
+//
+//        输入:
+//        image = [[1,1,1],[1,1,0],[1,0,1]]
+//        sr = 1, sc = 1, newColor = 2
+//        输出: [[2,2,2],[2,2,0],[2,0,1]]
+//        解析:
+//        在图像的正中间，(坐标(sr,sc)=(1,1)),
+//        在路径上所有符合条件的像素点的颜色都被更改成2。
+//        注意，右下角的像素没有更改为2，
+//        因为它不是在上下左右四个方向上与初始点相连的像素点。
+//
+//    注意:
+//
+//        image 和 image[0] 的长度在范围 [1, 50] 内。
+//        给出的初始点将满足 0 <= sr < image.length 和 0 <= sc < image[0].length。
+//        image[i][j] 和 newColor 表示的颜色值在范围 [0, 65535]内。
+    public static int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        int rows = image.length;
+        int cols = image[0].length;
+        boolean[][] visited = new boolean[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (i == sr && j == sc) {
+                    LinkedList<String> lk = new LinkedList<>();
+                    lk.offer(i + ":" + j);
+                    visited[i][j] = true;
+                    while (!lk.isEmpty()) {
+                        String[] split = lk.poll().split(":");
+                        int idx_i = Integer.valueOf(split[0]);
+                        int idx_j = Integer.valueOf(split[1]);
+
+                        // 上
+                        if (idx_i - 1 >= 0 && !visited[idx_i - 1][idx_j] && image[idx_i - 1][idx_j] == image[idx_i][idx_j]) {
+                            lk.offer((idx_i - 1) + ":" + idx_j);
+                            visited[idx_i - 1][idx_j] = true;
+                        }
+
+                        // 下
+                        if (idx_i + 1 < rows && !visited[idx_i + 1][idx_j] && image[idx_i + 1][idx_j] == image[idx_i][idx_j]) {
+                            lk.offer((idx_i + 1) + ":" + idx_j);
+                            visited[idx_i + 1][idx_j] = true;
+                        }
+
+                        // 左
+                        if (idx_j - 1 >= 0 && !visited[idx_i][idx_j - 1] && image[idx_i][idx_j - 1] == image[idx_i][idx_j]) {
+                            lk.offer(idx_i + ":" + (idx_j - 1));
+                            visited[idx_i][idx_j - 1] = true;
+                        }
+
+                        // 右
+                        if (idx_j + 1 < cols && !visited[idx_i][idx_j + 1] && image[idx_i][idx_j + 1] == image[idx_i][idx_j]) {
+                            lk.offer(idx_i + ":" + (idx_j + 1));
+                            visited[idx_i][idx_j + 1] = true;
+                        }
+
+                        image[idx_i][idx_j] = newColor;
+                    }
+                }
+            }
+        }
+
+        return image;
+    }
+
     //    设计你的循环队列实现。 循环队列是一种线性数据结构，其操作表现基于 FIFO（先进先出）原则并且队尾被连接在队首之后以形成一个循环。它也被称为“环形缓冲器”。
     //
     //    循环队列的一个好处是我们可以利用这个队列之前用过的空间。在一个普通队列里，一旦一个队列满了，我们就不能插入下一个元素，即使在队列前面仍有空间。但是使用循环队列，我们能使用这些空间去存储新的值。

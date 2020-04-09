@@ -76,4 +76,10 @@ public class QueuesTest {
         Queues.wallsAndGates(nums);
         System.out.println(nums);
     }
+
+    @Test
+    @DisplayName("图像渲染")
+    public void floodFillTest() {
+        int[][] flood = Queues.floodFill(new int[][]{{1, 1, 1}, {1, 1, 0}, {1, 0, 1}}, 1, 1, 2);
+    }
 }
