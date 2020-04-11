@@ -82,4 +82,23 @@ public class QueuesTest {
     public void floodFillTest() {
         int[][] flood = Queues.floodFill(new int[][]{{1, 1, 1}, {1, 1, 0}, {1, 0, 1}}, 1, 1, 2);
     }
+
+    @Test
+    @DisplayName("01 矩阵")
+    public void updateMatrixTest() {
+        int[][] matrix = Queues.updateMatrix(new int[][]{{0, 0, 0}, {0, 1, 0}, {0, 0, 0}});
+        matrix = Queues.updateMatrix(new int[][]{{0, 0, 0}, {0, 1, 0}, {1, 1, 1}});
+        matrix = Queues.updateMatrix(new int[][]{
+                {1,0,1,1,0,0,1,0,0,1},
+                {0,1,1,0,1,0,1,0,1,1},
+                {0,0,1,0,1,0,0,1,0,0},
+                {1,0,1,0,1,1,1,1,1,1},
+                {0,1,0,1,1,0,0,0,0,1},
+                {0,0,1,0,1,1,1,0,1,0},
+                {0,1,0,1,0,1,0,0,1,1},
+                {1,0,0,0,1,1,1,1,0,1},
+                {1,1,1,1,1,1,1,0,1,0},
+                {1,1,1,1,0,1,0,0,1,1}
+        });
+    }
 }

@@ -291,6 +291,120 @@ public class Queues {
         return image;
     }
 
+    //    给定一个由 0 和 1 组成的矩阵，找出每个元素到最近的 0 的距离。
+    //
+    //    两个相邻元素间的距离为 1 。
+    //
+    //    示例 1:
+    //    输入:
+    //
+    //            0 0 0
+    //            0 1 0
+    //            0 0 0
+    //
+    //    输出:
+    //
+    //            0 0 0
+    //            0 1 0
+    //            0 0 0
+    //
+    //    示例 2:
+    //    输入:
+    //
+    //            0 0 0
+    //            0 1 0
+    //            1 1 1
+    //
+    //    输出:
+    //
+    //            0 0 0
+    //            0 1 0
+    //            1 2 1
+    //
+    //    注意:
+    //
+    //        给定矩阵的元素个数不超过 10000。
+    //        给定矩阵中至少有一个元素是 0。
+    //        矩阵中的元素只在四个方向上相邻: 上、下、左、右。
+    public static int[][] updateMatrix(int[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        boolean[][] visited = new boolean[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (matrix[i][j] == 1) {
+                    LinkedList<String> lk = new LinkedList<>();
+                    lk.offer(i + ":" + j);
+                    int size = lk.size();
+                    visited[i][j] = true;
+                    int deep = 1;
+                    visited = new boolean[rows][cols];
+                    while (!lk.isEmpty()) {
+                        int loop = size;
+                        size = 0;
+                        for (int c = 0; c < loop; c++) {
+                            String[] split = lk.poll().split(":");
+                            int idx_i = Integer.valueOf(split[0]);
+                            int idx_j = Integer.valueOf(split[1]);
+
+                            if (idx_i - 1 >= 0) {
+                                if (matrix[idx_i - 1][idx_j] == 0) {
+                                    lk.clear();
+                                    break;
+                                } else if (!visited[idx_i - 1][idx_j]) {
+                                    lk.offer((idx_i - 1) + ":" + idx_j);
+                                    visited[idx_i - 1][idx_j] = true;
+                                    size++;
+                                }
+                            }
+
+                            if (idx_i + 1 < rows) {
+                                if (matrix[idx_i + 1][idx_j] == 0) {
+                                    lk.clear();
+                                    break;
+                                } else if (!visited[idx_i + 1][idx_j]) {
+                                    lk.offer((idx_i + 1) + ":" + idx_j);
+                                    visited[idx_i + 1][idx_j] = true;
+                                    size++;
+                                }
+                            }
+
+                            if (idx_j - 1 >= 0) {
+                                if (matrix[idx_i][idx_j - 1] == 0) {
+                                    lk.clear();
+                                    break;
+                                } else if (!visited[idx_i][idx_j - 1]) {
+                                    lk.offer(idx_i + ":" + (idx_j - 1));
+                                    visited[idx_i][idx_j - 1] = true;
+                                    size++;
+                                }
+                            }
+
+                            if (idx_j + 1 < cols) {
+                                if (matrix[idx_i][idx_j + 1] == 0) {
+                                    lk.clear();
+                                    break;
+                                } else if (!visited[idx_i][idx_j + 1]) {
+                                    lk.offer(idx_i + ":" + (idx_j + 1));
+                                    visited[idx_i][idx_j + 1] = true;
+                                    size++;
+                                }
+                            }
+                        }
+
+                        if (lk.isEmpty()) {
+                            matrix[i][j] = deep;
+                        } else {
+                            deep++;
+                        }
+                    }
+                }
+            }
+        }
+
+        return matrix;
+    }
+
     //    设计你的循环队列实现。 循环队列是一种线性数据结构，其操作表现基于 FIFO（先进先出）原则并且队尾被连接在队首之后以形成一个循环。它也被称为“环形缓冲器”。
     //
     //    循环队列的一个好处是我们可以利用这个队列之前用过的空间。在一个普通队列里，一旦一个队列满了，我们就不能插入下一个元素，即使在队列前面仍有空间。但是使用循环队列，我们能使用这些空间去存储新的值。
