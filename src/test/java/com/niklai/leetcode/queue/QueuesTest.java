@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class QueuesTest {
 
     @Test
@@ -57,11 +60,14 @@ public class QueuesTest {
         Assertions.assertEquals(1, result);
     }
 
-    //    @Test
-//    @DisplayName("完全平方数")
+    @Test
+    @DisplayName("完全平方数")
     public void numSquaresTest() {
         int result = Queues.numSquares(12);
         Assertions.assertEquals(3, result);
+
+        result = Queues.numSquares(13);
+        Assertions.assertEquals(2, result);
     }
 
     @Test
@@ -89,16 +95,36 @@ public class QueuesTest {
         int[][] matrix = Queues.updateMatrix(new int[][]{{0, 0, 0}, {0, 1, 0}, {0, 0, 0}});
         matrix = Queues.updateMatrix(new int[][]{{0, 0, 0}, {0, 1, 0}, {1, 1, 1}});
         matrix = Queues.updateMatrix(new int[][]{
-                {1,0,1,1,0,0,1,0,0,1},
-                {0,1,1,0,1,0,1,0,1,1},
-                {0,0,1,0,1,0,0,1,0,0},
-                {1,0,1,0,1,1,1,1,1,1},
-                {0,1,0,1,1,0,0,0,0,1},
-                {0,0,1,0,1,1,1,0,1,0},
-                {0,1,0,1,0,1,0,0,1,1},
-                {1,0,0,0,1,1,1,1,0,1},
-                {1,1,1,1,1,1,1,0,1,0},
-                {1,1,1,1,0,1,0,0,1,1}
+                {1, 0, 1, 1, 0, 0, 1, 0, 0, 1},
+                {0, 1, 1, 0, 1, 0, 1, 0, 1, 1},
+                {0, 0, 1, 0, 1, 0, 0, 1, 0, 0},
+                {1, 0, 1, 0, 1, 1, 1, 1, 1, 1},
+                {0, 1, 0, 1, 1, 0, 0, 0, 0, 1},
+                {0, 0, 1, 0, 1, 1, 1, 0, 1, 0},
+                {0, 1, 0, 1, 0, 1, 0, 0, 1, 1},
+                {1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
+                {1, 1, 1, 1, 1, 1, 1, 0, 1, 0},
+                {1, 1, 1, 1, 0, 1, 0, 0, 1, 1}
         });
+    }
+
+    @Test
+    @DisplayName("钥匙和房间")
+    public void canVisitAllRoomsTest() {
+        Assertions.assertTrue(
+                Queues.canVisitAllRooms(Arrays.asList(
+                        Arrays.asList(1),
+                        Arrays.asList(2),
+                        Arrays.asList(3),
+                        Arrays.asList()
+                )));
+
+        Assertions.assertTrue(
+                !Queues.canVisitAllRooms(Arrays.asList(
+                        Arrays.asList(1,3),
+                        Arrays.asList(3,0,1),
+                        Arrays.asList(2),
+                        Arrays.asList(0)
+                )));
     }
 }

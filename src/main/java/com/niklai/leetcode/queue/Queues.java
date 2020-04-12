@@ -1,6 +1,9 @@
 package com.niklai.leetcode.queue;
 
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 public class Queues {
 
@@ -201,6 +204,11 @@ public class Queues {
         numIslandsItem2(grid, idx_i, idx_j + 1);
     }
 
+    /**
+     * @param n
+     * @return
+     * @see QueuesTest#numSquaresTest()
+     */
     //    给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, ...）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。
     //
     //    示例 1:
@@ -215,7 +223,28 @@ public class Queues {
     //    输出: 2
     //    解释: 13 = 4 + 9.
     public static int numSquares(int n) {
-        return 0;
+        if (n < 1) {
+            return 0;
+        }
+
+        if (n == 1) {
+            return 1;
+        }
+
+        LinkedList<Integer> lk = new LinkedList<>();
+        lk.offer(n);
+        int count = 0;
+        while (!lk.isEmpty()) {
+            Integer num = lk.poll();
+            int sqrt = (int) Math.sqrt(num);
+            if (num != sqrt * sqrt) {
+                lk.offer(num - sqrt * sqrt);
+            }
+
+            count++;
+        }
+
+        return count;
     }
 
     //    有一幅以二维整数数组表示的图画，每一个整数表示该图画的像素值大小，数值在 0 到 65535 之间。
@@ -291,6 +320,12 @@ public class Queues {
         return image;
     }
 
+
+    /**
+     * @param matrix
+     * @return
+     * @see QueuesTest#updateMatrixTest()
+     */
     //    给定一个由 0 和 1 组成的矩阵，找出每个元素到最近的 0 的距离。
     //
     //    两个相邻元素间的距离为 1 。
@@ -329,80 +364,141 @@ public class Queues {
     public static int[][] updateMatrix(int[][] matrix) {
         int rows = matrix.length;
         int cols = matrix[0].length;
-        boolean[][] visited = new boolean[rows][cols];
+        LinkedList<String> lk = new LinkedList<>();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (matrix[i][j] == 1) {
-                    LinkedList<String> lk = new LinkedList<>();
-                    lk.offer(i + ":" + j);
-                    int size = lk.size();
-                    visited[i][j] = true;
+                    lk.offer(String.format("%d:%d", i, j));
                     int deep = 1;
-                    visited = new boolean[rows][cols];
+                    int size = 1;
                     while (!lk.isEmpty()) {
-                        int loop = size;
-                        size = 0;
-                        for (int c = 0; c < loop; c++) {
+                        boolean find = false;
+                        int count = 0;
+                        for (int k = 0; k < size; k++) {
                             String[] split = lk.poll().split(":");
-                            int idx_i = Integer.valueOf(split[0]);
-                            int idx_j = Integer.valueOf(split[1]);
+                            int ii = Integer.valueOf(split[0]);
+                            int jj = Integer.valueOf(split[1]);
 
-                            if (idx_i - 1 >= 0) {
-                                if (matrix[idx_i - 1][idx_j] == 0) {
-                                    lk.clear();
+                            // 上
+                            if (ii - 1 >= 0) {
+                                if (matrix[ii - 1][jj] == 0) {
+                                    find = true;
                                     break;
-                                } else if (!visited[idx_i - 1][idx_j]) {
-                                    lk.offer((idx_i - 1) + ":" + idx_j);
-                                    visited[idx_i - 1][idx_j] = true;
-                                    size++;
+                                } else {
+                                    lk.offer(String.format("%d:%d", ii - 1, jj));
+                                    count++;
                                 }
                             }
 
-                            if (idx_i + 1 < rows) {
-                                if (matrix[idx_i + 1][idx_j] == 0) {
-                                    lk.clear();
+                            // 下
+                            if (ii + 1 < rows) {
+                                if (matrix[ii + 1][jj] == 0) {
+                                    find = true;
                                     break;
-                                } else if (!visited[idx_i + 1][idx_j]) {
-                                    lk.offer((idx_i + 1) + ":" + idx_j);
-                                    visited[idx_i + 1][idx_j] = true;
-                                    size++;
+                                } else {
+                                    lk.offer(String.format("%d:%d", ii + 1, jj));
+                                    count++;
                                 }
                             }
 
-                            if (idx_j - 1 >= 0) {
-                                if (matrix[idx_i][idx_j - 1] == 0) {
-                                    lk.clear();
+                            // 左
+                            if (jj - 1 >= 0) {
+                                if (matrix[ii][jj - 1] == 0) {
+                                    find = true;
                                     break;
-                                } else if (!visited[idx_i][idx_j - 1]) {
-                                    lk.offer(idx_i + ":" + (idx_j - 1));
-                                    visited[idx_i][idx_j - 1] = true;
-                                    size++;
+                                } else {
+                                    lk.offer(String.format("%d:%d", ii, jj - 1));
+                                    count++;
                                 }
                             }
 
-                            if (idx_j + 1 < cols) {
-                                if (matrix[idx_i][idx_j + 1] == 0) {
-                                    lk.clear();
+                            // 右
+                            if (jj + 1 < cols) {
+                                if (matrix[ii][jj + 1] == 0) {
+                                    find = true;
                                     break;
-                                } else if (!visited[idx_i][idx_j + 1]) {
-                                    lk.offer(idx_i + ":" + (idx_j + 1));
-                                    visited[idx_i][idx_j + 1] = true;
-                                    size++;
+                                } else {
+                                    lk.offer(String.format("%d:%d", ii, jj + 1));
+                                    count++;
                                 }
                             }
                         }
 
-                        if (lk.isEmpty()) {
-                            matrix[i][j] = deep;
+                        if (find) {
+                            break;
                         } else {
+                            size = count;
                             deep++;
                         }
                     }
+
+                    matrix[i][j] = deep;
+                    lk.clear();
                 }
             }
         }
 
         return matrix;
+    }
+
+    /**
+     * @param rooms
+     * @return
+     * @see QueuesTest#canVisitAllRoomsTest()
+     */
+    //    有 N 个房间，开始时你位于 0 号房间。每个房间有不同的号码：0，1，2，...，N-1，并且房间里可能有一些钥匙能使你进入下一个房间。
+    //
+    //    在形式上，对于每个房间 i 都有一个钥匙列表 rooms[i]，每个钥匙 rooms[i][j] 由 [0,1，...，N-1] 中的一个整数表示，其中 N = rooms.length。 钥匙 rooms[i][j] = v 可以打开编号为 v 的房间。
+    //
+    //    最初，除 0 号房间外的其余所有房间都被锁住。
+    //
+    //    你可以自由地在房间之间来回走动。
+    //
+    //    如果能进入每个房间返回 true，否则返回 false。
+    //
+    //    示例 1：
+    //
+    //    输入: [[1],[2],[3],[]]
+    //    输出: true
+    //    解释:
+    //    我们从 0 号房间开始，拿到钥匙 1。
+    //    之后我们去 1 号房间，拿到钥匙 2。
+    //    然后我们去 2 号房间，拿到钥匙 3。
+    //    最后我们去了 3 号房间。
+    //    由于我们能够进入每个房间，我们返回 true。
+    //
+    //    示例 2：
+    //
+    //    输入：[[1,3],[3,0,1],[2],[0]]
+    //    输出：false
+    //    解释：我们不能进入 2 号房间。
+    //
+    //    提示：
+    //
+    //        1 <= rooms.length <= 1000
+    //        0 <= rooms[i].length <= 1000
+    //        所有房间中的钥匙数量总计不超过 3000
+    public static boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        Set<Integer> visited = new HashSet<>();
+        LinkedList<Integer> lk = new LinkedList<>();
+        List<Integer> room = rooms.get(0);
+        visited.add(0);
+        for (Integer r : room) {
+            lk.offer(r);
+        }
+
+        while (!lk.isEmpty()) {
+            Integer roomIndex = lk.poll();
+            if (!visited.contains(roomIndex)) {
+                visited.add(roomIndex);
+                room = rooms.get(roomIndex);
+                for (Integer r : room) {
+                    lk.offer(r);
+                }
+            }
+        }
+
+        return visited.size() == rooms.size();
     }
 
     //    设计你的循环队列实现。 循环队列是一种线性数据结构，其操作表现基于 FIFO（先进先出）原则并且队尾被连接在队首之后以形成一个循环。它也被称为“环形缓冲器”。
