@@ -31,4 +31,18 @@ public class TwoPointsTest {
         result = TwoPoints.mySqrt(8);
         Assertions.assertEquals(2, result);
     }
+
+    @Test
+    @DisplayName("搜索旋转排序数组")
+    public void rotateSearchTest() {
+        Assertions.assertEquals(4, TwoPoints.rotateSearch(new int[]{4, 5, 6, 7, 0, 1, 2}, 0));
+        Assertions.assertEquals(-1, TwoPoints.rotateSearch(new int[]{4, 5, 6, 7, 0, 1, 2}, 3));
+    }
+
+    @Test
+    @DisplayName("第一个错误的版本")
+    public void firstBadVersionTest() {
+        TwoPoints.Solution s = new TwoPoints.Solution();
+        Assertions.assertEquals(4, s.firstBadVersion(5));
+    }
 }

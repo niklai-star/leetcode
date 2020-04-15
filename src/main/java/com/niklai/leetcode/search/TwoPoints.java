@@ -91,4 +91,105 @@ public class TwoPoints {
 
         return end;
     }
+
+    /**
+     * @param nums
+     * @param target
+     * @return
+     * @see TwoPointsTest#rotateSearchTest()
+     */
+    //    假设按照升序排序的数组在预先未知的某个点上进行了旋转。
+    //
+    //            ( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。
+    //
+    //    搜索一个给定的目标值，如果数组中存在这个目标值，则返回它的索引，否则返回 -1 。
+    //
+    //    你可以假设数组中不存在重复的元素。
+    //
+    //    你的算法时间复杂度必须是 O(log n) 级别。
+    //
+    //    示例 1:
+    //
+    //      输入: nums = [4,5,6,7,0,1,2], target = 0
+    //      输出: 4
+    //
+    //    示例 2:
+    //
+    //      输入: nums = [4,5,6,7,0,1,2], target = 3
+    //      输出: -1
+    public static int rotateSearch(int[] nums, int target) {
+        if (nums.length == 0) {
+            return -1;
+        }
+
+        int start = 0;
+        int end = nums.length - 1;
+        while (start < end) {
+            int mid = (start + end) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+
+            if (nums[start] < nums[mid]) {
+                // 左侧顺序
+                if (nums[start] <= target && target <= nums[mid]) {
+                    end = mid - 1;
+                } else {
+                    start = mid + 1;
+                }
+            } else if (nums[start] > nums[mid]) {
+                // 右侧顺序
+                if (nums[mid] <= target && target <= nums[end]) {
+                    start = mid + 1;
+                } else {
+                    end = mid - 1;
+                }
+            } else {
+                if (nums[start] == target) {
+                    return start;
+                } else {
+                    start = mid + 1;
+                }
+            }
+        }
+
+        return nums[end] == target ? end : -1;
+    }
+
+    public static class Solution extends VersionControl {
+        /**
+         * @param n
+         * @return
+         * @see TwoPointsTest#firstBadVersionTest()
+         */
+        //    你是产品经理，目前正在带领一个团队开发新的产品。不幸的是，你的产品的最新版本没有通过质量检测。由于每个版本都是基于之前的版本开发的，所以错误的版本之后的所有版本都是错的。
+        //
+        //    假设你有 n 个版本 [1, 2, ..., n]，你想找出导致之后所有版本出错的第一个错误的版本。
+        //
+        //    你可以通过调用 bool isBadVersion(version) 接口来判断版本号 version 是否在单元测试中出错。实现一个函数来查找第一个错误的版本。你应该尽量减少对调用 API 的次数。
+        //
+        //    示例:
+        //
+        //        给定 n = 5，并且 version = 4 是第一个错误的版本。
+        //
+        //        调用 isBadVersion(3) -> false
+        //        调用 isBadVersion(5) -> true
+        //        调用 isBadVersion(4) -> true
+        //
+        //    所以，4 是第一个错误的版本。
+        public int firstBadVersion(int n) {
+            int left = 1;
+            int right = n;
+            while (left < right) {
+                int mid = Math.toIntExact(((long) left + (long) right) / 2);
+                if (isBadVersion(mid)) {
+                    right = mid;
+                } else {
+                    left = mid + 1;
+                }
+            }
+
+            return left;
+        }
+    }
 }
