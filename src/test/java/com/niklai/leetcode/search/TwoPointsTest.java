@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 public class TwoPointsTest {
 
     @Test
@@ -44,5 +46,39 @@ public class TwoPointsTest {
     public void firstBadVersionTest() {
         TwoPoints.Solution s = new TwoPoints.Solution();
         Assertions.assertEquals(4, s.firstBadVersion(5));
+    }
+
+    @Test
+    @DisplayName("寻找峰值")
+    public void findPeakElementTest() {
+        int result = TwoPoints.findPeakElement(new int[]{1, 2, 3, 1});
+        Assertions.assertEquals(2, result);
+
+        result = TwoPoints.findPeakElement(new int[]{1, 2, 1, 3, 5, 6, 4});
+        Assertions.assertTrue(Arrays.asList(1, 5).contains(result));
+
+        result = TwoPoints.findPeakElement(new int[]{1});
+        Assertions.assertEquals(0, result);
+
+        result = TwoPoints.findPeakElement(new int[]{2, 1});
+        Assertions.assertEquals(0, result);
+
+        result = TwoPoints.findPeakElement(new int[]{1, 2});
+        Assertions.assertEquals(1, result);
+
+        result = TwoPoints.findPeakElement(new int[]{1, 2, 3});
+        Assertions.assertEquals(2, result);
+
+        result = TwoPoints.findPeakElement(new int[]{1, 3, 1});
+        Assertions.assertEquals(1, result);
+
+        result = TwoPoints.findPeakElement(new int[]{3, 2, 1});
+        Assertions.assertEquals(0, result);
+
+        result = TwoPoints.findPeakElement(new int[]{1, 2, 3, 4});
+        Assertions.assertEquals(3, result);
+
+        result = TwoPoints.findPeakElement(new int[]{1, 2, 3, 4, 5});
+        Assertions.assertEquals(4, result);
     }
 }
