@@ -1,5 +1,12 @@
 package com.niklai.leetcode.search;
 
+import com.niklai.leetcode.tree.two.TreeNode;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class TwoPoints {
 
     /**
@@ -203,6 +210,285 @@ public class TwoPoints {
         return 0;
     }
 
+    /**
+     * @param nums
+     * @return
+     * @see TwoPointsTest#findMinTest()
+     */
+    //    假设按照升序排序的数组在预先未知的某个点上进行了旋转。
+    //
+    //    ( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。
+    //
+    //    请找出其中最小的元素。
+    //
+    //    你可以假设数组中不存在重复元素。
+    //
+    //    示例 1:
+    //
+    //    输入: [3,4,5,1,2]
+    //    输出: 1
+    //
+    //    示例 2:
+    //
+    //    输入: [4,5,6,7,0,1,2]
+    //    输出: 0
+    public static int findMin(int[] nums) {
+        return findMinItem(nums, 0, nums.length - 1);
+    }
+
+    private static int findMinItem(int[] nums, int left, int right) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+
+        if (left + 1 == right) {
+            return nums[left] < nums[right] ? nums[left] : nums[right];
+        }
+
+        int mid = (left + right) / 2;
+        int leftMin = findMinItem(nums, left, mid);
+        int rightMin = findMinItem(nums, mid, right);
+        return leftMin < rightMin ? leftMin : rightMin;
+    }
+
+    /**
+     * @param nums
+     * @param target
+     * @return
+     * @see TwoPointsTest#searchRangeTest()
+     */
+    //    给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。
+    //
+    //    你的算法时间复杂度必须是 O(log n) 级别。
+    //
+    //    如果数组中不存在目标值，返回 [-1, -1]。
+    //
+    //    示例 1:
+    //
+    //    输入: nums = [5,7,7,8,8,10], target = 8
+    //    输出: [3,4]
+    //
+    //    示例 2:
+    //
+    //    输入: nums = [5,7,7,8,8,10], target = 6
+    //    输出: [-1,-1]
+    public static int[] searchRange(int[] nums, int target) {
+        int[] r = new int[]{-1, -1};
+
+        int left = 0;
+        int right = nums.length - 1;
+        int m = -1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                m = mid;
+                break;
+            }
+        }
+
+        if (m == -1) {
+            return r;
+        }
+
+        for (int i = m; i >= 0; i--) {
+            if (nums[i] == target) {
+                r[0] = i;
+            } else {
+                break;
+            }
+        }
+
+        for (int i = m; i < nums.length; i++) {
+            if (nums[i] == target) {
+                r[1] = i;
+            } else {
+                break;
+            }
+        }
+
+        return r;
+    }
+
+    /**
+     * @param arr
+     * @param k
+     * @param x
+     * @return
+     * @see TwoPointsTest#findClosestElementsTest()
+     */
+    //    给定一个排序好的数组，两个整数 k 和 x，从数组中找到最靠近 x（两数之差最小）的 k 个数。返回的结果必须要是按升序排好的。如果有两个数与 x 的差值一样，优先选择数值较小的那个数。
+    //
+    //    示例 1:
+    //
+    //    输入: [1,2,3,4,5], k=4, x=3
+    //    输出: [1,2,3,4]
+    //
+    //
+    //
+    //    示例 2:
+    //
+    //    输入: [1,2,3,4,5], k=4, x=-1
+    //    输出: [1,2,3,4]
+    //
+    //
+    //
+    //    说明:
+    //
+    //    k 的值为正数，且总是小于给定排序数组的长度。
+    //    数组不为空，且长度不超过 104
+    //    数组里的每个元素与 x 的绝对值不超过 104
+    public static List<Integer> findClosestElements(int[] arr, int k, int x) {
+        int left = 0;
+        int right = arr.length - 1;
+        int targetIndex = -1;
+        while (left + 1 < right) {
+            int mid = (left + right) / 2;
+            if (arr[mid] == x) {
+                targetIndex = mid;
+                break;
+            }
+
+            if (arr[mid] > x) {
+                right = mid;
+            } else {
+                left = mid;
+            }
+        }
+
+        List<Integer> result = new ArrayList<>();
+        // 找到等于x或者离x最近的数
+        if (targetIndex == -1) {
+            targetIndex = Math.abs(arr[left] - x) > Math.abs(arr[right] - x) ? right : left;
+        }
+
+        left = targetIndex;
+        right = targetIndex;
+        while (right - left < k || (left > 0 && right == arr.length - 1)) {
+            if (Math.abs(arr[left] - x) < Math.abs(arr[right] - x)) {
+
+            }
+        }
+
+        for (int i = left; i <= right; i++) {
+            result.add(arr[i]);
+        }
+
+        return result;
+    }
+
+    /**
+     * @param root
+     * @param target
+     * @return
+     * @see TwoPointsTest#closestValueTest()
+     */
+    //    给定一个不为空的二叉搜索树和一个目标值 target，请在该二叉搜索树中找到最接近目标值 target 的数值。
+    //
+    //    注意：
+    //
+    //    给定的目标值 target 是一个浮点数
+    //            题目保证在该二叉搜索树中只会存在一个最接近目标值的数
+    //
+    //    示例：
+    //
+    //    输入: root = [4,2,5,1,3]，目标值 target = 3.714286
+    //
+    //              4
+    //             / \
+    //            2   5
+    //           / \
+    //          1   3
+    //
+    //    输出: 4
+    public static int closestValue(TreeNode root, double target) {
+        Integer left = null;
+        Integer right = null;
+
+        TreeNode n = root;
+        while (n != null) {
+            if (n.val > target) {
+                right = n.val;
+                n = n.left;
+            } else if (n.val < target) {
+                left = n.val;
+                n = n.right;
+            } else {
+                return n.val;
+            }
+        }
+
+        if (left == null) {
+            return right;
+        }
+
+        if (right == null) {
+            return left;
+        }
+
+        return right - target < target - left ? right : left;
+    }
+
+    /**
+     * @param reader
+     * @param target
+     * @return
+     * @see TwoPointsTest#searchTese()
+     */
+    //    给定一个升序整数数组，写一个函数搜索 nums 中数字 target。如果 target 存在，返回它的下标，否则返回 -1。注意，这个数组的大小是未知的。你只可以通过 ArrayReader 接口访问这个数组，ArrayReader.get(k) 返回数组中第 k 个元素（下标从 0 开始）。
+    //
+    //    你可以认为数组中所有的整数都小于 10000。如果你访问数组越界，ArrayReader.get 会返回 2147483647。
+    //
+    //
+    //
+    //    样例 1：
+    //
+    //    输入: array = [-1,0,3,5,9,12], target = 9
+    //    输出: 4
+    //    解释: 9 存在在 nums 中，下标为 4
+    //
+    //    样例 2：
+    //
+    //    输入: array = [-1,0,3,5,9,12], target = 2
+    //    输出: -1
+    //    解释: 2 不在数组中所以返回 -1
+    //
+    //
+    //
+    //    注释 ：
+    //
+    //    你可以认为数组中所有元素的值互不相同。
+    //    数组元素的值域是 [-9999, 9999]。
+    public static int search(ArrayReader reader, int target) {
+        int mid = 0;
+        while (reader.get(mid) != Integer.MAX_VALUE && reader.get(mid * 2 + 2) != Integer.MAX_VALUE) {
+            mid++;
+        }
+
+        int length = reader.get(mid * 2 + 1) != Integer.MAX_VALUE ? mid * 2 + 2 : mid * 2 + 1;
+
+        int left = 0;
+        int right = length - 1;
+        while (left <= right) {
+            if (reader.get(mid) == target) {
+                return mid;
+            }
+
+            if (reader.get(mid) > target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+
+            mid = (left + right) / 2;
+        }
+
+        return -1;
+    }
+
     public static class Solution extends VersionControl {
         /**
          * @param n
@@ -238,5 +524,193 @@ public class TwoPoints {
 
             return left;
         }
+    }
+
+    static class ArrayReader {
+        private int[] arr;
+
+        public ArrayReader(int[] arr) {
+            this.arr = arr;
+        }
+
+        public int get(int key) {
+            if (key < 0 || key >= arr.length) {
+                return Integer.MAX_VALUE;
+            }
+
+            return arr[key];
+        }
+    }
+
+    /**
+     * @param x
+     * @param n
+     * @return
+     * @see TwoPointsTest#myPowTest()
+     */
+    //    实现 pow(x, n) ，即计算 x 的 n 次幂函数。
+    //
+    //    示例 1:
+    //
+    //    输入: 2.00000, 10
+    //    输出: 1024.00000
+    //
+    //    示例 2:
+    //
+    //    输入: 2.10000, 3
+    //    输出: 9.26100
+    //
+    //    示例 3:
+    //
+    //    输入: 2.00000, -2
+    //    输出: 0.25000
+    //    解释: 2-2 = 1/22 = 1/4 = 0.25
+    //
+    //    说明:
+    //
+    //            -100.0 < x < 100.0
+    //    n 是 32 位有符号整数，其数值范围是 [−231, 231 − 1] 。
+    public static double myPow(double x, int n) {
+        if (x == 0) {
+            return 0.0;
+        }
+
+        if (n == 0) {
+            return 1.0;
+        }
+
+        long nn = n;
+        if (nn < 0) {
+            x = 1 / x;
+            nn = -nn;
+        }
+
+        return myPowItem(x, nn);
+    }
+
+    private static double myPowItem(double x, long n) {
+        if (n == 0) {
+            return 1.0;
+        }
+
+        double half = myPowItem(x, n / 2);
+        if (n % 2 == 1) {
+            return half * half * x;
+        } else {
+            return half * half;
+        }
+    }
+
+    /**
+     * @param num
+     * @return
+     * @see TwoPointsTest#isPerfectSquareTest()
+     */
+    //    给定一个正整数 num，编写一个函数，如果 num 是一个完全平方数，则返回 True，否则返回 False。
+    //
+    //    说明：不要使用任何内置的库函数，如  sqrt。
+    //
+    //    示例 1：
+    //
+    //    输入：16
+    //    输出：True
+    //
+    //    示例 2：
+    //
+    //    输入：14
+    //    输出：False
+    public static boolean isPerfectSquare(int num) {
+        if (num == 1) {
+            return true;
+        }
+
+        long left = 2;
+        long right = num / 2;
+
+        while (left <= right) {
+            long mid = (left + right) / 2;
+            long n = mid * mid;
+            if (n > num) {
+                right = mid - 1;
+            } else if (n < num) {
+                left = mid + 1;
+            } else {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param letters
+     * @param target
+     * @return
+     * @see TwoPointsTest#nextGreatestLetterTest()
+     */
+    //    给你一个排序后的字符列表 letters ，列表中只包含小写英文字母。另给出一个目标字母 target，请你寻找在这一有序列表里比目标字母大的最小字母。
+    //
+    //    在比较时，字母是依序循环出现的。举个例子：
+    //
+    //    如果目标字母 target = 'z' 并且字符列表为 letters = ['a', 'b']，则答案返回 'a'
+    //
+    //
+    //
+    //    示例：
+    //
+    //    输入:
+    //    letters = ["c", "f", "j"]
+    //    target = "a"
+    //    输出: "c"
+    //
+    //    输入:
+    //    letters = ["c", "f", "j"]
+    //    target = "c"
+    //    输出: "f"
+    //
+    //    输入:
+    //    letters = ["c", "f", "j"]
+    //    target = "d"
+    //    输出: "f"
+    //
+    //    输入:
+    //    letters = ["c", "f", "j"]
+    //    target = "g"
+    //    输出: "j"
+    //
+    //    输入:
+    //    letters = ["c", "f", "j"]
+    //    target = "j"
+    //    输出: "c"
+    //
+    //    输入:
+    //    letters = ["c", "f", "j"]
+    //    target = "k"
+    //    输出: "c"
+    //
+    //
+    //
+    //    提示：
+    //
+    //    letters长度范围在[2, 10000]区间内。
+    //    letters 仅由小写字母组成，最少包含两个不同的字母。
+    //    目标字母target 是一个小写字母。
+    public static char nextGreatestLetter(char[] letters, char target) {
+        if (target < letters[0] || letters[letters.length - 1] <= target) {
+            return letters[0];
+        }
+
+        int left = 0;
+        int right = letters.length - 1;
+        while (left + 1 < right) {
+            int mid = (left + right) / 2;
+            if (letters[mid] <= target) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+
+        return letters[right];
     }
 }
