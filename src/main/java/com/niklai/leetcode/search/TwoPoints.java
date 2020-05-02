@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TwoPoints {
 
@@ -342,42 +345,52 @@ public class TwoPoints {
     //    数组不为空，且长度不超过 104
     //    数组里的每个元素与 x 的绝对值不超过 104
     public static List<Integer> findClosestElements(int[] arr, int k, int x) {
+        if (arr[0] >= x) {
+            return Arrays.stream(Arrays.copyOfRange(arr, 0, k > arr.length ? arr.length : k)).boxed().collect(Collectors.toList());
+        }
+
+        if (arr[arr.length - 1] <= x) {
+            return Arrays.stream(Arrays.copyOfRange(arr, arr.length - k <= 0 ? 0 : arr.length - k, arr.length)).boxed().collect(Collectors.toList());
+        }
+
         int left = 0;
         int right = arr.length - 1;
-        int targetIndex = -1;
         while (left + 1 < right) {
             int mid = (left + right) / 2;
             if (arr[mid] == x) {
-                targetIndex = mid;
+                left = mid;
                 break;
             }
 
-            if (arr[mid] > x) {
-                right = mid;
-            } else {
+            if (arr[mid] < x) {
                 left = mid;
+            } else {
+                right = mid;
             }
         }
 
-        List<Integer> result = new ArrayList<>();
-        // 找到等于x或者离x最近的数
-        if (targetIndex == -1) {
-            targetIndex = Math.abs(arr[left] - x) > Math.abs(arr[right] - x) ? right : left;
-        }
+        int idx = Math.abs(arr[left] - x) <= Math.abs(arr[right] - x) ? left : right;
+        left = idx;
+        right = idx;
+        while (Math.abs(right - left) < (k - 1) && (left != 0 || right != arr.length - 1)) {
+            if (left - 1 < 0) {
+                right++;
+                continue;
+            }
 
-        left = targetIndex;
-        right = targetIndex;
-        while (right - left < k || (left > 0 && right == arr.length - 1)) {
-            if (Math.abs(arr[left] - x) < Math.abs(arr[right] - x)) {
+            if (right + 1 >= arr.length) {
+                left--;
+                continue;
+            }
 
+            if (Math.abs(arr[left - 1] - x) <= Math.abs(arr[right + 1] - x)) {
+                left--;
+            } else {
+                right++;
             }
         }
 
-        for (int i = left; i <= right; i++) {
-            result.add(arr[i]);
-        }
-
-        return result;
+        return Arrays.stream(Arrays.copyOfRange(arr, left, right + 1)).boxed().collect(Collectors.toList());
     }
 
     /**
@@ -712,5 +725,107 @@ public class TwoPoints {
         }
 
         return letters[right];
+    }
+
+    /**
+     * @param nums
+     * @return
+     * @see TwoPointsTest#findMinRepeatTest()
+     */
+    //    假设按照升序排序的数组在预先未知的某个点上进行了旋转。
+    //
+    //            ( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。
+    //
+    //    请找出其中最小的元素。
+    //
+    //    注意数组中可能存在重复的元素。
+    //
+    //    示例 1：
+    //
+    //    输入: [1,3,5]
+    //    输出: 1
+    //
+    //    示例 2：
+    //
+    //    输入: [2,2,2,0,1]
+    //    输出: 0
+    //
+    //    说明：
+    //
+    //    这道题是 寻找旋转排序数组中的最小值 的延伸题目。
+    //    允许重复会影响算法的时间复杂度吗？会如何影响，为什么？
+    public static int findMinRepeat(int[] nums) {
+        return findMinRepeatItem(nums, 0, nums.length - 1);
+    }
+
+    private static int findMinRepeatItem(int[] nums, int left, int right) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+
+        if (left == right) {
+            return nums[left];
+        }
+
+        if (left + 1 == right) {
+            return nums[left] < nums[right] ? nums[left] : nums[right];
+        }
+
+        int mid = (left + right) / 2;
+        int leftRight = mid;
+        int rightLeft = mid;
+        while (leftRight - 1 >= left && nums[leftRight - 1] == nums[leftRight]) {
+            leftRight = leftRight - 1;
+        }
+
+        while (rightLeft + 1 <= right && nums[rightLeft + 1] == nums[rightLeft]) {
+            rightLeft = rightLeft + 1;
+        }
+
+        int leftNum = findMinRepeatItem(nums, left, leftRight);
+        int rightNum = findMinRepeatItem(nums, rightLeft, right);
+        return leftNum < rightNum ? leftNum : rightNum;
+    }
+
+    /**
+     * @param numbers
+     * @param target
+     * @return
+     * @see TwoPointsTest#twoSumTest()
+     */
+    //    给定一个已按照升序排列 的有序数组，找到两个数使得它们相加之和等于目标数。
+    //
+    //    函数应该返回这两个下标值 index1 和 index2，其中 index1 必须小于 index2。
+    //
+    //    说明:
+    //
+    //    返回的下标值（index1 和 index2）不是从零开始的。
+    //    你可以假设每个输入只对应唯一的答案，而且你不可以重复使用相同的元素。
+    //
+    //    示例:
+    //
+    //    输入: numbers = [2, 7, 11, 15], target = 9
+    //    输出: [1,2]
+    //    解释: 2 与 7 之和等于目标数 9 。因此 index1 = 1, index2 = 2
+    public static int[] twoSum(int[] numbers, int target) {
+        int left = 0;
+        int right = numbers.length - 1;
+        int[] result = new int[2];
+        while (left < right) {
+            int r = numbers[left] + numbers[right];
+            if (r == target) {
+                result[0] = left + 1;
+                result[1] = right + 1;
+                break;
+            }
+
+            if (r < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+
+        return result;
     }
 }

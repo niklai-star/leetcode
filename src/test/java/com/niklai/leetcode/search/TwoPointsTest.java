@@ -210,4 +210,35 @@ public class TwoPointsTest {
         result = TwoPoints.nextGreatestLetter(ch, 'k');
         Assertions.assertEquals('c', result);
     }
+
+    @Test
+    @DisplayName("寻找旋转排序数组中的最小值(数组中有重复数字)")
+    public void findMinRepeatTest() {
+        int result = TwoPoints.findMinRepeat(new int[]{1, 3, 5});
+        Assertions.assertEquals(1, result);
+
+        result = TwoPoints.findMinRepeat(new int[]{2, 2, 2, 0, 0, 1, 2});
+        Assertions.assertEquals(0, result);
+    }
+
+    @Test
+    @DisplayName("两数之和 II - 输入有序数组")
+    public void twoSumTest() {
+        int[] result = TwoPoints.twoSum(new int[]{2, 7, 11, 15}, 9);
+        Assertions.assertEquals(1, result[0]);
+        Assertions.assertEquals(2, result[1]);
+
+        result = TwoPoints.twoSum(new int[]{1, 3, 4, 5, 7, 9}, 13);
+        Assertions.assertEquals(3, result[0]);
+        Assertions.assertEquals(6, result[1]);
+
+
+        result = TwoPoints.twoSum(new int[]{-1, 0}, -1);
+        Assertions.assertEquals(1, result[0]);
+        Assertions.assertEquals(2, result[1]);
+
+        result = TwoPoints.twoSum(new int[]{-2, -1, 0}, -1);
+        Assertions.assertEquals(2, result[0]);
+        Assertions.assertEquals(3, result[1]);
+    }
 }
