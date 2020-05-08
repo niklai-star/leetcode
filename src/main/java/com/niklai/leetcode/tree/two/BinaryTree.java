@@ -2,7 +2,7 @@ package com.niklai.leetcode.tree.two;
 
 import java.util.*;
 
-public class TwoForkTree {
+public class BinaryTree {
 
     // 给定一个二叉树，返回它的 前序 遍历。
     //

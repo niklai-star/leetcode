@@ -1,11 +1,12 @@
 package com.niklai.leetcode.tree.n;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // Definition for a Node.
 public class Node {
     public int val;
-    public List<Node> children;
+    public List<Node> children = new ArrayList<>();
 
     public Node() {
     }

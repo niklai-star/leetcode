@@ -1,12 +1,10 @@
 package com.niklai.leetcode.tree.two;
 
-import com.niklai.leetcode.tree.two.TreeNode;
-import com.niklai.leetcode.tree.two.TwoForkSearchTree;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class TwoForkSearchTreeTest {
+public class BinarySearchTreeTest {
 
     @Test
     @DisplayName("验证二叉搜索树1")
@@ -17,7 +15,7 @@ public class TwoForkSearchTreeTest {
         n2.left = n1;
         n2.right = n3;
 
-        boolean result = TwoForkSearchTree.isValidBST(n2);
+        boolean result = BinarySearchTree.isValidBST(n2);
         Assertions.assertTrue(result);
     }
 
@@ -34,7 +32,7 @@ public class TwoForkSearchTreeTest {
         n5.left = n1;
         n5.right = n4;
 
-        boolean result = TwoForkSearchTree.isValidBST(n5);
+        boolean result = BinarySearchTree.isValidBST(n5);
         Assertions.assertTrue(!result);
     }
 
@@ -52,7 +50,7 @@ public class TwoForkSearchTreeTest {
         n7.left = n3;
         n7.right = n15;
 
-        TwoForkSearchTree.BSTIterator iterator = new TwoForkSearchTree.BSTIterator(n7);
+        BinarySearchTree.BSTIterator iterator = new BinarySearchTree.BSTIterator(n7);
         System.out.println(iterator.next());    // 返回 3
         System.out.println(iterator.next());    // 返回 7
         System.out.println(iterator.hasNext()); // 返回 true
@@ -77,10 +75,10 @@ public class TwoForkSearchTreeTest {
         n4.left = n2;
         n4.right = n7;
 
-        TreeNode treeNode = TwoForkSearchTree.searchBST(n4, 2);
+        TreeNode treeNode = BinarySearchTree.searchBST(n4, 2);
         Assertions.assertEquals(treeNode.val, n2.val);
 
-        treeNode = TwoForkSearchTree.searchBST(n4, 5);
+        treeNode = BinarySearchTree.searchBST(n4, 5);
         Assertions.assertNull(treeNode);
     }
 
@@ -97,20 +95,20 @@ public class TwoForkSearchTreeTest {
         n4.left = n2;
         n4.right = n7;
 
-        TreeNode treeNode = TwoForkSearchTree.insertIntoBST(n4, 5);
+        TreeNode treeNode = BinarySearchTree.insertIntoBST(n4, 5);
         Assertions.assertEquals(treeNode.val, n4.val);
     }
 
     @Test
     @DisplayName("存在重复元素 III")
     public void containsNearbyAlmostDuplicateTest() {
-        boolean result = TwoForkSearchTree.containsNearbyAlmostDuplicate(new int[]{1, 2, 3, 1}, 3, 0);
+        boolean result = BinarySearchTree.containsNearbyAlmostDuplicate(new int[]{1, 2, 3, 1}, 3, 0);
         Assertions.assertTrue(result);
 
-        result = TwoForkSearchTree.containsNearbyAlmostDuplicate(new int[]{1, 0, 1, 1}, 1, 2);
+        result = BinarySearchTree.containsNearbyAlmostDuplicate(new int[]{1, 0, 1, 1}, 1, 2);
         Assertions.assertTrue(result);
 
-        result = TwoForkSearchTree.containsNearbyAlmostDuplicate(new int[]{1, 5, 9, 1, 5, 9}, 2, 3);
+        result = BinarySearchTree.containsNearbyAlmostDuplicate(new int[]{1, 5, 9, 1, 5, 9}, 2, 3);
         Assertions.assertTrue(!result);
     }
 
@@ -127,7 +125,7 @@ public class TwoForkSearchTreeTest {
         n3.left = n9;
         n3.right = n20;
 
-        boolean balanced = TwoForkSearchTree.isBalanced(n3);
+        boolean balanced = BinarySearchTree.isBalanced(n3);
         Assertions.assertTrue(balanced);
 
         TreeNode r = new TreeNode(1);
@@ -144,14 +142,14 @@ public class TwoForkSearchTreeTest {
         l3.left = l4;
         l3.right = r4;
 
-        balanced = TwoForkSearchTree.isBalanced(r);
+        balanced = BinarySearchTree.isBalanced(r);
         Assertions.assertTrue(!balanced);
     }
 
     @Test
     @DisplayName("将有序数组转换为二叉搜索树")
     public void sortedArrayToBSTTest() {
-        TreeNode treeNode = TwoForkSearchTree.sortedArrayToBST(new int[]{-10, -3, 0, 5, 9});
+        TreeNode treeNode = BinarySearchTree.sortedArrayToBST(new int[]{-10, -3, 0, 5, 9});
         System.out.println(treeNode);
     }
 }

@@ -1,8 +1,5 @@
 package com.niklai.leetcode.tree.two;
 
-import com.niklai.leetcode.tree.two.Node;
-import com.niklai.leetcode.tree.two.TreeNode;
-import com.niklai.leetcode.tree.two.TwoForkTree;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class TwoForkTreeTest {
+public class BinaryTreeTest {
     private TreeNode root;
 
     @BeforeEach
@@ -62,63 +59,63 @@ public class TwoForkTreeTest {
     @Test
     @DisplayName("二叉树前序遍历-递归")
     public void preorderTraversalTest() {
-        List<Integer> list = TwoForkTree.preorderTraversal(root);
+        List<Integer> list = BinaryTree.preorderTraversal(root);
         System.out.println(list);
     }
 
     @Test
     @DisplayName("二叉树前序遍历-迭代")
     public void preorderTraversal2Test() {
-        List<Integer> list = TwoForkTree.preorderTraversal2(root);
+        List<Integer> list = BinaryTree.preorderTraversal2(root);
         System.out.println(list);
     }
 
     @Test
     @DisplayName("二叉树中序遍历-递归")
     public void inorderTraversalTest() {
-        List<Integer> list = TwoForkTree.inorderTraversal(root);
+        List<Integer> list = BinaryTree.inorderTraversal(root);
         System.out.println(list);
     }
 
     @Test
     @DisplayName("二叉树中序遍历-迭代")
     public void inorderTraversal2Test() {
-        List<Integer> list = TwoForkTree.inorderTraversal2(root);
+        List<Integer> list = BinaryTree.inorderTraversal2(root);
         System.out.println(list);
     }
 
     @Test
     @DisplayName("二叉树后序遍历-递归")
     public void postorderTraversalTest() {
-        List<Integer> list = TwoForkTree.postorderTraversal(root);
+        List<Integer> list = BinaryTree.postorderTraversal(root);
         System.out.println(list);
     }
 
     @Test
     @DisplayName("二叉树后序遍历-迭代")
     public void postorderTraversal2Test() {
-        List<Integer> list = TwoForkTree.postorderTraversal2(root);
+        List<Integer> list = BinaryTree.postorderTraversal2(root);
         System.out.println(list);
     }
 
     @Test
     @DisplayName("二叉树的层次遍历")
     public void levelOrderTest() {
-        List<List<Integer>> list = TwoForkTree.levelOrder(root);
+        List<List<Integer>> list = BinaryTree.levelOrder(root);
         System.out.println(list);
     }
 
     @Test
     @DisplayName("二叉树的最大深度-递归（自底向上）")
     public void maxDepthTest() {
-        int i = TwoForkTree.maxDepth(root);
+        int i = BinaryTree.maxDepth(root);
         Assertions.assertEquals(i, 3);
     }
 
     @Test
     @DisplayName("二叉树的最大深度-迭代（自顶向下）")
     public void maxDepth2Test() {
-        int i = TwoForkTree.maxDepth2(root);
+        int i = BinaryTree.maxDepth2(root);
         Assertions.assertEquals(i, 3);
     }
 
@@ -126,11 +123,11 @@ public class TwoForkTreeTest {
     @DisplayName("对称二叉树-递归")
     public void isSymmetricTest() {
         TreeNode treeNode = createTreeNode(new Integer[]{1, 2, 2, 3, 4, 4, 3}, 0);
-        boolean result = TwoForkTree.isSymmetric(treeNode);
+        boolean result = BinaryTree.isSymmetric(treeNode);
         Assertions.assertTrue(result);
 
         treeNode = createTreeNode(new Integer[]{1, 2, 2, null, 3, null, 3}, 0);
-        result = TwoForkTree.isSymmetric(treeNode);
+        result = BinaryTree.isSymmetric(treeNode);
         Assertions.assertTrue(!result);
     }
 
@@ -138,11 +135,11 @@ public class TwoForkTreeTest {
     @DisplayName("对称二叉树-迭代")
     public void isSymmetric2Test() {
         TreeNode treeNode = createTreeNode(new Integer[]{1, 2, 2, 3, 4, 4, 3}, 0);
-        boolean result = TwoForkTree.isSymmetric2(treeNode);
+        boolean result = BinaryTree.isSymmetric2(treeNode);
         Assertions.assertTrue(result);
 
         treeNode = createTreeNode(new Integer[]{1, 2, 2, null, 3, null, 3}, 0);
-        result = TwoForkTree.isSymmetric2(treeNode);
+        result = BinaryTree.isSymmetric2(treeNode);
         Assertions.assertTrue(!result);
     }
 
@@ -173,7 +170,7 @@ public class TwoForkTreeTest {
     public void hasPathSumTest() {
         TreeNode root = hasPathSumNode();
 
-        boolean result = TwoForkTree.hasPathSum(root, 22);
+        boolean result = BinaryTree.hasPathSum(root, 22);
         Assertions.assertTrue(result);
     }
 
@@ -182,21 +179,21 @@ public class TwoForkTreeTest {
     public void hasPathSum2Test() {
         TreeNode root = hasPathSumNode();
 
-        boolean result = TwoForkTree.hasPathSum2(root, 22);
+        boolean result = BinaryTree.hasPathSum2(root, 22);
         Assertions.assertTrue(result);
     }
 
     @Test
     @DisplayName("从前序与中序遍历序列构造二叉树-递归")
     public void buildTreeTest() {
-        TreeNode treeNode = TwoForkTree.buildTree(new int[]{3, 9, 20, 15, 7}, new int[]{9, 3, 15, 20, 7});
+        TreeNode treeNode = BinaryTree.buildTree(new int[]{3, 9, 20, 15, 7}, new int[]{9, 3, 15, 20, 7});
         System.out.println(treeNode);
     }
 
     @Test
     @DisplayName("从中序与后序遍历序列构造二叉树-递归")
     public void buildTree2Test() {
-        TreeNode treeNode = TwoForkTree.buildTree2(new int[]{9, 3, 15, 20, 7}, new int[]{9, 15, 7, 20, 3});
+        TreeNode treeNode = BinaryTree.buildTree2(new int[]{9, 3, 15, 20, 7}, new int[]{9, 15, 7, 20, 3});
         System.out.println(treeNode);
     }
 
@@ -218,7 +215,7 @@ public class TwoForkTreeTest {
         n1.left = n2;
         n1.right = n3;
 
-        Node node = TwoForkTree.connect(n1);
+        Node node = BinaryTree.connect(n1);
         System.out.println(node);
     }
 
@@ -242,7 +239,7 @@ public class TwoForkTreeTest {
         n1.left = n2;
         n1.right = n3;
 
-        Node node = TwoForkTree.connect2(n1);
+        Node node = BinaryTree.connect2(n1);
         System.out.println(node);
     }
 
@@ -268,7 +265,7 @@ public class TwoForkTreeTest {
         n3.left = n5;
         n3.right = n1;
 
-        TreeNode treeNode = TwoForkTree.lowestCommonAncestor(n3, n6, n4);
+        TreeNode treeNode = BinaryTree.lowestCommonAncestor(n3, n6, n4);
         Assertions.assertEquals(treeNode.val, n5.val);
 
     }
@@ -287,14 +284,14 @@ public class TwoForkTreeTest {
         n1.left = n2;
         n1.right = n3;
 
-        String s = TwoForkTree.Codec.serialize(n1);
+        String s = BinaryTree.Codec.serialize(n1);
         System.out.println(s);
     }
 
     @Test
     @DisplayName("二叉树的反序列化")
     public void deserializeTest() {
-        TreeNode node = TwoForkTree.Codec.deserialize("1,2,3,null,null,4,5");
+        TreeNode node = BinaryTree.Codec.deserialize("1,2,3,null,null,4,5");
 //        TreeNode node = TwoForkTree.Codec.deserialize("1,null,1,null,1,null,1");
         System.out.println(node);
     }

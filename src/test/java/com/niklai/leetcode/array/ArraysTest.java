@@ -81,6 +81,19 @@ public class ArraysTest {
     }
 
     @Test
+    @DisplayName("最长公共前缀")
+    public void longestCommonPrefixTest() {
+        String result = Arrays.longestCommonPrefix(new String[]{"flower", "flow", "flight"});
+        Assertions.assertEquals("fl", result);
+
+        result = Arrays.longestCommonPrefix(new String[]{"dog", "racecar", "car"});
+        Assertions.assertEquals("", result);
+
+        result = Arrays.longestCommonPrefix(new String[]{"dogdog", "dog", "dogdogdog"});
+        Assertions.assertEquals("dog", result);
+    }
+
+    @Test
     @DisplayName("从排序数组中删除重复项")
     public void removeDuplicatesTest() {
         int[] nums = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};

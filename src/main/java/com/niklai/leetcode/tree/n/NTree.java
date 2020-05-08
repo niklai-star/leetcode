@@ -1,10 +1,8 @@
 package com.niklai.leetcode.tree.n;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
-public class NForkTree {
+public class NTree {
 
     //    给定一个 N 叉树，返回其节点值的前序遍历。
     //
@@ -147,5 +145,33 @@ public class NForkTree {
         }
 
         return depth;
+    }
+
+    /**
+     *
+     * @param root
+     * @return
+     * @see NTreeTest#getAllLeafNodePathTest()
+     */
+    public static List<String> getAllLeafNodePath(Node root) {
+        HashMap<Node, String> map = new HashMap<>();
+        Stack<Node> st = new Stack<>();
+        st.push(root);
+        map.put(root, root.val + "");
+
+        List<String> result = new ArrayList<>();
+        while (!st.isEmpty()) {
+            Node n = st.pop();
+            for (Node child : n.children) {
+                st.push(child);
+                map.put(child, map.get(n) + " >> " + child.val);
+            }
+
+            if (n.children.isEmpty()) {
+                result.add(map.get(n));
+            }
+        }
+
+        return result;
     }
 }
