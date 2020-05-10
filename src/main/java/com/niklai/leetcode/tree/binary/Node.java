@@ -1,4 +1,4 @@
-package com.niklai.leetcode.tree.two;
+package com.niklai.leetcode.tree.binary;
 
 public class Node {
     public int val;

@@ -1,4 +1,4 @@
-package com.niklai.leetcode.tree.two;
+package com.niklai.leetcode.tree.binary;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

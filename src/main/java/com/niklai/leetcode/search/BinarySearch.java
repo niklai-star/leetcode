@@ -1,22 +1,18 @@
 package com.niklai.leetcode.search;
 
-import com.niklai.leetcode.tree.two.TreeNode;
+import com.niklai.leetcode.tree.binary.TreeNode;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class TwoPoints {
+public class BinarySearch {
 
     /**
      * @param nums
      * @param target
      * @return
-     * @see TwoPointsTest#searchTest()
+     * @see BinarySearchTest#searchTest()
      */
     //    给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
     //
@@ -66,7 +62,7 @@ public class TwoPoints {
     /**
      * @param x
      * @return
-     * @see TwoPointsTest#mySqrtTest()
+     * @see BinarySearchTest#mySqrtTest()
      */
     //    实现 int sqrt(int x) 函数。
     //
@@ -106,7 +102,7 @@ public class TwoPoints {
      * @param nums
      * @param target
      * @return
-     * @see TwoPointsTest#rotateSearchTest()
+     * @see BinarySearchTest#rotateSearchTest()
      */
     //    假设按照升序排序的数组在预先未知的某个点上进行了旋转。
     //
@@ -169,7 +165,7 @@ public class TwoPoints {
     /**
      * @param nums
      * @return
-     * @see TwoPointsTest#findPeakElementTest()
+     * @see BinarySearchTest#findPeakElementTest()
      */
     //    峰值元素是指其值大于左右相邻值的元素。
     //
@@ -216,7 +212,7 @@ public class TwoPoints {
     /**
      * @param nums
      * @return
-     * @see TwoPointsTest#findMinTest()
+     * @see BinarySearchTest#findMinTest()
      */
     //    假设按照升序排序的数组在预先未知的某个点上进行了旋转。
     //
@@ -258,7 +254,7 @@ public class TwoPoints {
      * @param nums
      * @param target
      * @return
-     * @see TwoPointsTest#searchRangeTest()
+     * @see BinarySearchTest#searchRangeTest()
      */
     //    给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。
     //
@@ -321,7 +317,7 @@ public class TwoPoints {
      * @param k
      * @param x
      * @return
-     * @see TwoPointsTest#findClosestElementsTest()
+     * @see BinarySearchTest#findClosestElementsTest()
      */
     //    给定一个排序好的数组，两个整数 k 和 x，从数组中找到最靠近 x（两数之差最小）的 k 个数。返回的结果必须要是按升序排好的。如果有两个数与 x 的差值一样，优先选择数值较小的那个数。
     //
@@ -397,7 +393,7 @@ public class TwoPoints {
      * @param root
      * @param target
      * @return
-     * @see TwoPointsTest#closestValueTest()
+     * @see BinarySearchTest#closestValueTest()
      */
     //    给定一个不为空的二叉搜索树和一个目标值 target，请在该二叉搜索树中找到最接近目标值 target 的数值。
     //
@@ -449,7 +445,7 @@ public class TwoPoints {
      * @param reader
      * @param target
      * @return
-     * @see TwoPointsTest#searchTese()
+     * @see BinarySearchTest#searchTese()
      */
     //    给定一个升序整数数组，写一个函数搜索 nums 中数字 target。如果 target 存在，返回它的下标，否则返回 -1。注意，这个数组的大小是未知的。你只可以通过 ArrayReader 接口访问这个数组，ArrayReader.get(k) 返回数组中第 k 个元素（下标从 0 开始）。
     //
@@ -559,7 +555,7 @@ public class TwoPoints {
      * @param x
      * @param n
      * @return
-     * @see TwoPointsTest#myPowTest()
+     * @see BinarySearchTest#myPowTest()
      */
     //    实现 pow(x, n) ，即计算 x 的 n 次幂函数。
     //
@@ -617,7 +613,7 @@ public class TwoPoints {
     /**
      * @param num
      * @return
-     * @see TwoPointsTest#isPerfectSquareTest()
+     * @see BinarySearchTest#isPerfectSquareTest()
      */
     //    给定一个正整数 num，编写一个函数，如果 num 是一个完全平方数，则返回 True，否则返回 False。
     //
@@ -659,7 +655,7 @@ public class TwoPoints {
      * @param letters
      * @param target
      * @return
-     * @see TwoPointsTest#nextGreatestLetterTest()
+     * @see BinarySearchTest#nextGreatestLetterTest()
      */
     //    给你一个排序后的字符列表 letters ，列表中只包含小写英文字母。另给出一个目标字母 target，请你寻找在这一有序列表里比目标字母大的最小字母。
     //
@@ -730,7 +726,7 @@ public class TwoPoints {
     /**
      * @param nums
      * @return
-     * @see TwoPointsTest#findMinRepeatTest()
+     * @see BinarySearchTest#findMinRepeatTest()
      */
     //    假设按照升序排序的数组在预先未知的某个点上进行了旋转。
     //
@@ -791,7 +787,7 @@ public class TwoPoints {
      * @param numbers
      * @param target
      * @return
-     * @see TwoPointsTest#twoSumTest()
+     * @see BinarySearchTest#twoSumTest()
      */
     //    给定一个已按照升序排列 的有序数组，找到两个数使得它们相加之和等于目标数。
     //
